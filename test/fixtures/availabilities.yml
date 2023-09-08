@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  doctor: one
+  off_day: 2023-09-07
+  start_time: 2023-09-07 13:35:16
+  end_time: 2023-09-07 13:35:16
+
+two:
+  doctor: two
+  off_day: 2023-09-07
+  start_time: 2023-09-07 13:35:16
+  end_time: 2023-09-07 13:35:16
