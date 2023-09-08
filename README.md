@@ -57,12 +57,13 @@ Setup
 2. cd scheduling_system
 * Install required gems:
 3. bundle install
-Setup the database:
+## Setup the database:
 4. rails db:create db:create
 5. rails db:create db:migrate
 6. rails db:create db:seed
-* for DB use postgresql and de file .env to make de CLINIC_APP_DATABASE_PASSWORD
-Start the Rails server:
+* for DB use postgresql and de file .env to make de 
+  # CLINIC_APP_DATABASE_PASSWORD
+## Start the Rails server:
 7. rails server
 * By default, the server will run on http://localhost:3000.
 
