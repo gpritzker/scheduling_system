@@ -83,8 +83,7 @@ Doctors
     #EXAMPLE GET http://localhost:3000/doctors/1/working_hours
 Availability
 # Endpoint to check a doctors availability
-    #GET http://localhost:3000/doctors/:id/availabilities
-    #GET http://localhost:3000/doctors/1/availabilities  is an Example to check a doctors availability
+    #GET GET curl -X GET "http://localhost:3000/doctors/5/available_slots?date=2023-09-05 is an Example to check a doctors availability with a date for params
 Appointments
 # Endpoint to update an appointment
     # curl -X PUT http://localhost:3000/doctors/:doctor_id/appointments/:id \

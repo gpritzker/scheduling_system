@@ -10,8 +10,8 @@ dr_john = Doctor.create(name: "Dr. John Doe")
 dr_jane = Doctor.create(name: "Dr. Jane Doe")
 
 # Availability for Dr. John
-Availability.create(doctor: dr_john, off_day: "2022-12-01", start_time: "09:00", end_time: "17:00")
-Availability.create(doctor: dr_john, off_day: "2022-12-02", start_time: "09:00", end_time: "15:00")
+Availability.create(doctor: dr_john,  date: "2023-09-19", off_day: "Sunday", start_time: "09:00", end_time: "17:00")
+Availability.create(doctor: dr_john,  date: "2023-09-18", off_day: "Sunday", start_time: "09:00", end_time: "15:00")
 
 # Availability for Dr. Jane
-Availability.create(doctor: dr_jane, off_day: "2022-12-01", start_time: "10:00", end_time: "18:00")
+Availability.create(doctor: dr_jane,  date: "2023-09-15", off_day: "Sunday", start_time: "10:00", end_time: "18:00")
