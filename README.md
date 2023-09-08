@@ -4,7 +4,7 @@
 
 # Scheduling System - Design and Data Models Overview
 # Thought Process
-Problem Definition:
+## Problem Definition:
 
 Recognized the need for a system where patients can schedule appointments with doctors based on the doctors' availabilities.
 User Experience:
@@ -18,7 +18,7 @@ Data Integrity:
 
 Introduced validations and checks to ensure appointment overlaps don't happen and data integrity is maintained.
 # Data Models
-Doctor:
+## Doctor:
 
 Attributes: name
 Associations:
@@ -26,45 +26,45 @@ Has many availabilities
 Has many appointments
 Validations: Name presence
 
-Availability:
+## Availability:
 
 Attributes: start_time, end_time, off_day
 Associations:
 Belongs to doctor
 Purpose: To indicate the timeframes during which a doctor is available for appointments. The off_day denotes days when the doctor isn't working.
 
-Appointment:
+## Appointment:
 
 Attributes: date, start_time, end_time
 Associations:
 Belongs to doctor
 Purpose: Represents a scheduled appointment for a doctor.
 
-Table of Contents
+# Table of Contents
 * Prerequisites
 * Setup
 * Usage
 * Running Tests
 * Endpoints
 
-Prerequisites
+## Prerequisites
 - Ruby 2.7.2
 - Rails 6.x
 - PostgreSQL
 Setup
-Clone the repository:
-- git clone https://github.com/yourusername/scheduling_system.git
-- cd scheduling_system
-Install required gems:
-- bundle install
+## Clone the repository:
+1. git clone https://github.com/yourusername/scheduling_system.git
+2. cd scheduling_system
+* Install required gems:
+3. bundle install
 Setup the database:
-- rails db:create db:create
-- rails db:create db:migrate
-- rails db:create db:seed
-for DB use postgresql and de file .env to make de CLINIC_APP_DATABASE_PASSWORD
+4. rails db:create db:create
+5. rails db:create db:migrate
+6. rails db:create db:seed
+* for DB use postgresql and de file .env to make de CLINIC_APP_DATABASE_PASSWORD
 Start the Rails server:
-- rails server
-By default, the server will run on http://localhost:3000.
+7. rails server
+* By default, the server will run on http://localhost:3000.
 
 # Usage
 Once the server is up and running, you can navigate to it in your browser or use tools like curl or Postman to interact with the API.
