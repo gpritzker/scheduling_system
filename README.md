@@ -1,4 +1,6 @@
 # README
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJyDKzvgrYFSm2eakWodQD+CsLXCW2hNfgJrUBtkHkbD mac
+
 
 Scheduling System
 The Scheduling System allows for the management of appointments between patients and doctors. This system supports operations like creating, updating, and checking the availability of doctors for appointments.
@@ -76,12 +78,11 @@ We use RSpec for testing. To run tests:
 # Endpoints
 Doctors
 # Endpoint to show a doctors information
-#GET http://localhost:3000/doctors/:id
-#EXAMPLE GET http://localhost:3000/doctors/1
+    #GET http://localhost:3000/doctors/:id
+    #EXAMPLE GET http://localhost:3000/doctors/1
 # Endpoint to show a doctors working_hours and day off information
-#GET http://localhost:3000/doctors/:doctor_id/working_hours
-#EXAMPLE GET http://localhost:3000/doctors/1/working_hours
-
+    #GET http://localhost:3000/doctors/:doctor_id/working_hours
+    #EXAMPLE GET http://localhost:3000/doctors/1/working_hours
 Availability
 # Endpoint to check a doctors availability
     #GET http://localhost:3000/doctors/:id/availabilities
