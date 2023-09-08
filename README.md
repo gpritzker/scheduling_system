@@ -1,12 +1,9 @@
 # README
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJyDKzvgrYFSm2eakWodQD+CsLXCW2hNfgJrUBtkHkbD mac
+# Scheduling System
+* The Scheduling System allows for the management of appointments between patients and doctors. This system supports operations like creating, updating, and checking the availability of doctors for appointments.
 
-
-Scheduling System
-The Scheduling System allows for the management of appointments between patients and doctors. This system supports operations like creating, updating, and checking the availability of doctors for appointments.
-
-Scheduling System - Design and Data Models Overview
-Thought Process
+# Scheduling System - Design and Data Models Overview
+# Thought Process
 Problem Definition:
 
 Recognized the need for a system where patients can schedule appointments with doctors based on the doctors' availabilities.
@@ -20,7 +17,7 @@ Designed the system in a way that new features or changes to the scheduling logi
 Data Integrity:
 
 Introduced validations and checks to ensure appointment overlaps don't happen and data integrity is maintained.
-Data Models
+# Data Models
 Doctor:
 
 Attributes: name
