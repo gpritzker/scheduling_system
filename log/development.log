@@ -4080,3 +4080,244 @@ Processing by AvailabilitiesController#index as HTML
 Completed 200 OK in 19ms (Views: 0.2ms | ActiveRecord: 1.0ms | Allocations: 2867)
 
 
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:53:40 -0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 86ms (Views: 0.2ms | ActiveRecord: 8.8ms | Allocations: 65623)
+
+
+Started POST "/doctors/1/appointments" for 127.0.0.1 at 2023-09-10 17:54:24 -0300
+Processing by AppointmentsController#create as */*
+  Parameters: {"appointment"=>{"date"=>"2023-09-5", "start_time"=>"16:00", "end_time"=>"17:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:10:in `create'
+  [1m[36mAppointment Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '16:00' AND end_time > '16:00') OR (start_time < '17:00' AND end_time >= '17:00') OR (start_time >= '16:00' AND end_time <= '17:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-05"], ["LIMIT", 1]]
+  ↳ app/models/doctor.rb:19:in `available_at?'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mAppointment Create (1.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-05"], ["start_time", "16:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-10 20:54:24.199979"], ["updated_at", "2023-09-10 20:54:24.199979"]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+Completed 201 Created in 14ms (Views: 0.2ms | ActiveRecord: 3.1ms | Allocations: 5360)
+
+
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:54:32 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.0ms | Allocations: 2930)
+
+
+Started POST "/doctors/1/appointments" for 127.0.0.1 at 2023-09-10 17:55:13 -0300
+Processing by AppointmentsController#create as */*
+  Parameters: {"appointment"=>{"date"=>"2023-09-4", "start_time"=>"16:00", "end_time"=>"17:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:10:in `create'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '16:00' AND end_time > '16:00') OR (start_time < '17:00' AND end_time >= '17:00') OR (start_time >= '16:00' AND end_time <= '17:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-04"], ["LIMIT", 1]]
+  ↳ app/models/doctor.rb:19:in `available_at?'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-04"], ["start_time", "16:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-10 20:55:14.001235"], ["updated_at", "2023-09-10 20:55:14.001235"]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+Completed 201 Created in 8ms (Views: 0.2ms | ActiveRecord: 1.6ms | Allocations: 3837)
+
+
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:55:19 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 0.8ms | Allocations: 3007)
+
+
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:55:22 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.9ms | Allocations: 2988)
+
+
+Started POST "/doctors/1/appointments" for 127.0.0.1 at 2023-09-10 17:55:59 -0300
+Processing by AppointmentsController#create as */*
+  Parameters: {"appointment"=>{"date"=>"2023-09-8", "start_time"=>"16:00", "end_time"=>"17:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:10:in `create'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '16:00' AND end_time > '16:00') OR (start_time < '17:00' AND end_time >= '17:00') OR (start_time >= '16:00' AND end_time <= '17:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["LIMIT", 1]]
+  ↳ app/models/doctor.rb:19:in `available_at?'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["start_time", "16:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-10 20:55:59.698979"], ["updated_at", "2023-09-10 20:55:59.698979"]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+Completed 201 Created in 8ms (Views: 0.1ms | ActiveRecord: 1.5ms | Allocations: 3833)
+
+
+Started POST "/doctors/1/appointments" for 127.0.0.1 at 2023-09-10 17:56:14 -0300
+Processing by AppointmentsController#create as */*
+  Parameters: {"appointment"=>{"date"=>"2023-09-7", "start_time"=>"16:00", "end_time"=>"17:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:10:in `create'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '16:00' AND end_time > '16:00') OR (start_time < '17:00' AND end_time >= '17:00') OR (start_time >= '16:00' AND end_time <= '17:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-07"], ["LIMIT", 1]]
+  ↳ app/models/doctor.rb:19:in `available_at?'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mAppointment Create (0.4ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-07"], ["start_time", "16:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-10 20:56:14.124897"], ["updated_at", "2023-09-10 20:56:14.124897"]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+Completed 201 Created in 9ms (Views: 0.1ms | ActiveRecord: 2.0ms | Allocations: 3833)
+
+
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:56:19 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.7ms | Allocations: 3131)
+
+
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:56:21 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 7ms (Views: 0.2ms | ActiveRecord: 1.0ms | Allocations: 3131)
+
+
+Started POST "/doctors/1/appointments" for 127.0.0.1 at 2023-09-10 17:57:01 -0300
+Processing by AppointmentsController#create as */*
+  Parameters: {"appointment"=>{"date"=>"2023-09-8", "start_time"=>"15:00", "end_time"=>"16:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:10:in `create'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '15:00' AND end_time > '15:00') OR (start_time < '16:00' AND end_time >= '16:00') OR (start_time >= '15:00' AND end_time <= '16:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["LIMIT", 1]]
+  ↳ app/models/doctor.rb:19:in `available_at?'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["start_time", "15:00:00"], ["end_time", "16:00:00"], ["created_at", "2023-09-10 20:57:01.650423"], ["updated_at", "2023-09-10 20:57:01.650423"]]
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/appointments_controller.rb:19:in `create'
+Completed 201 Created in 7ms (Views: 0.1ms | ActiveRecord: 1.4ms | Allocations: 3833)
+
+
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:57:07 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.1ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.7ms | Allocations: 3171)
+
+
+Started POST "/doctors/1/appointments" for 127.0.0.1 at 2023-09-10 18:02:34 -0300
+Processing by AppointmentsController#create as */*
+  Parameters: {"appointment"=>{"date"=>"2023-09-7", "start_time"=>"15:00", "end_time"=>"16:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:10:in `create'
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 3.0ms | Allocations: 6914)
+
+
+  
+NoMethodError (undefined method `strftime' for "2023-09-7":String
+Did you mean?  strip):
+  
+app/models/doctor.rb:11:in `available_at?'
+app/controllers/appointments_controller.rb:16:in `create'
+Started POST "/doctors/1/appointments" for 127.0.0.1 at 2023-09-10 18:02:56 -0300
+Processing by AppointmentsController#create as */*
+  Parameters: {"appointment"=>{"date"=>"2023-09-7", "start_time"=>"15:00", "end_time"=>"16:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:10:in `create'
+Completed 500 Internal Server Error in 54387ms (ActiveRecord: 3.8ms | Allocations: 205182)
+
+
+  
+NoMethodError (undefined method `strftime' for "2023-09-7":String
+Did you mean?  strip):
+  
+app/models/doctor.rb:12:in `available_at?'
+app/controllers/appointments_controller.rb:16:in `create'
+Started POST "/doctors/1/appointments" for 127.0.0.1 at 2023-09-10 18:03:53 -0300
+Processing by AppointmentsController#create as */*
+  Parameters: {"appointment"=>{"date"=>"2023-09-7", "start_time"=>"15:00", "end_time"=>"16:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:10:in `create'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "THURSDAY"], ["LIMIT", 1]]
+  ↳ (rdbg)//Users/gonzalopritzker/scheduling_system/app/models/doctor.rb:1:in `available_at?'
+  [1m[36mCACHE Availability Load (0.0ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "THURSDAY"], ["LIMIT", 1]]
+  ↳ (rdbg)//Users/gonzalopritzker/scheduling_system/app/models/doctor.rb:1:in `available_at?'
+  [1m[36mCACHE Availability Load (0.0ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "THURSDAY"], ["LIMIT", 1]]
+  ↳ app/models/doctor.rb:18:in `available_at?'
+Completed 422 Unprocessable Entity in 31132ms (Views: 0.2ms | ActiveRecord: 4.9ms | Allocations: 221395)
+
+
+Started POST "/doctors/1/appointments" for 127.0.0.1 at 2023-09-10 18:05:12 -0300
+Processing by AppointmentsController#create as */*
+  Parameters: {"appointment"=>{"date"=>"2023-09-7", "start_time"=>"15:00", "end_time"=>"16:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:10:in `create'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "THURSDAY"], ["LIMIT", 1]]
+  ↳ app/models/doctor.rb:17:in `available_at?'
+Completed 422 Unprocessable Entity in 15ms (Views: 0.2ms | ActiveRecord: 4.6ms | Allocations: 8512)
+
+
