@@ -3902,3 +3902,20 @@ Processing by AvailabilitiesController#index as HTML
 Completed 200 OK in 4835ms (Views: 0.2ms | ActiveRecord: 7.2ms | Allocations: 172194)
 
 
+Started GET "/doctors/1/working_hours" for ::1 at 2023-09-10 17:16:26 -0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by DoctorsController#working_hours as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mDoctor Load (0.4ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:13:in `working_hours'
+  [1m[36mAvailability Pluck (0.3ms)[0m  [1m[34mSELECT "availabilities"."off_day" FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:14:in `working_hours'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:17:in `map'
+Completed 200 OK in 89ms (Views: 0.2ms | ActiveRecord: 19.8ms | Allocations: 47933)
+
+
+Started GET "/doctors/2/appointments" for ::1 at 2023-09-10 17:16:54 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/doctors/2/appointments"):
+  

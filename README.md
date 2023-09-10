@@ -84,7 +84,7 @@ Doctors
 Availability
 # Endpoint to check a doctors availability
     #GET GET curl -X GET "http://localhost:3000/doctors/1/available_slots? is an Example to check a doctors availability
-    
+
 Appointments
 # Endpoint to book (appointment) a doctors open slot
    # Endpoint to book an appointment for a doctor's available slot.
@@ -103,15 +103,15 @@ $ curl -X POST \
   http://localhost:3000/doctors/2/appointments
 
 # Endpoint to update an existing appointment for a doctor.
-# Method: PUT
-# URL: http://localhost:3000/doctors/:doctor_id/appointments/:id
+## Method: PUT
+## URL: http://localhost:3000/doctors/:doctor_id/appointments/:id
 #
-# Parameters:
-# - date: The updated date for the appointment (format: "YYYY-MM-DD").
-# - start_time: The updated starting time of the appointment (format: "HH:MM").
-# - end_time: The updated ending time of the appointment (format: "HH:MM").
-#
-# Usage using curl:
+## Parameters:
+## - date: The updated date for the appointment (format: "YYYY-MM-DD").
+## - start_time: The updated starting time of the appointment (format: "HH:MM").
+## - end_time: The updated ending time of the appointment (format: "HH:MM").
+##
+## Usage using curl:
 $ curl -X PUT http://localhost:3000/doctors/:doctor_id/appointments/:id \
   -H "Content-Type: application/json" \
   -d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
