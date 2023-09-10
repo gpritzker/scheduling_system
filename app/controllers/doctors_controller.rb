@@ -1,6 +1,11 @@
 class DoctorsController < ApplicationController
     # Endpoint to show a doctors information
     #GET http://localhost:3000/doctors/:id
+    def index
+        @doctors = Doctor.all
+        render json: @doctors
+    end
+
     def show
       doctor = Doctor.find(params[:id])
       render json: doctor

@@ -75,6 +75,8 @@ We use RSpec for testing. To run tests:
 - rspec
 # Endpoints
 # Doctors
+## Endpoint to show all doctors
+    #GET http://localhost:3000/doctors
 ## Endpoint to show a doctors information
     #GET http://localhost:3000/doctors/:id
     #EXAMPLE GET http://localhost:3000/doctors/1
@@ -86,6 +88,9 @@ We use RSpec for testing. To run tests:
     #GET GET curl -X GET "http://localhost:3000/doctors/1/available_slots? is an Example to check a doctors availability
 
 # Appointments
+## Endpoint to show all appointment for a doctor
+    #GET http://localhost:3000/doctors/:id/appointments
+    example http://localhost:3000/doctors/1/appointments
 ## Endpoint to book an appointment for a doctor's available slot.
  Method: POST
  URL: http://localhost:3000/doctors/:id/appointments

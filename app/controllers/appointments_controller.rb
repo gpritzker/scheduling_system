@@ -6,6 +6,14 @@ class AppointmentsController < ApplicationController
     #  -d '{ "appointment": { "date": "2023-09-01", "start_time": "12:00", "end_time": "13:00" } }' \
     #  http://localhost:3000/doctors/2/appointments
 
+    before_action :set_doctor
+
+    def index
+      @appointments = @doctor.appointments
+      render json: @appointments
+    end
+
+
     def create
       doctor = Doctor.find(params[:doctor_id])
        # Check if the doctor exists
@@ -79,6 +87,10 @@ class AppointmentsController < ApplicationController
     end
   
     private
+
+    def set_doctor
+      @doctor = Doctor.find(params[:doctor_id])
+    end
   
     def appointment_params
       params.require(:appointment).permit(:doctor_id, :date, :start_time, :end_time)
