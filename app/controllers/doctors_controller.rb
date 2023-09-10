@@ -16,6 +16,7 @@ class DoctorsController < ApplicationController
             # Mapea las disponibilidades para obtener solo los horarios
         working_hours = doctor.availabilities.map do |availability|
             {
+                day: availability.weekday,
                 start_time: format_time_only(availability.start_time), 
                 end_time: format_time_only(availability.end_time)
             }
@@ -31,4 +32,3 @@ class DoctorsController < ApplicationController
         datetime.strftime("%H:%M")
     end
   end
-  

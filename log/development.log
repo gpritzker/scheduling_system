@@ -3919,3 +3919,164 @@ Started GET "/doctors/2/appointments" for ::1 at 2023-09-10 17:16:54 -0300
   
 ActionController::RoutingError (No route matches [GET] "/doctors/2/appointments"):
   
+Started GET "/doctors/1/available_slots" for ::1 at 2023-09-10 17:23:12 -0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:5:in `index'
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:14:in `index'
+  [1m[36mAvailability Load (0.3ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:21:in `index'
+Completed 200 OK in 59ms (Views: 0.2ms | ActiveRecord: 8.3ms | Allocations: 61105)
+
+
+Started GET "/doctors/2/available_slots" for ::1 at 2023-09-10 17:23:17 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:5:in `index'
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 2]]
+  ↳ app/controllers/availabilities_controller.rb:14:in `index'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 2]]
+  ↳ app/controllers/availabilities_controller.rb:21:in `index'
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 0.7ms | Allocations: 2064)
+
+
+Started GET "/doctors/1/working_hours" for ::1 at 2023-09-10 17:23:30 -0300
+Processing by DoctorsController#working_hours as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:13:in `working_hours'
+  [1m[36mAvailability Pluck (0.1ms)[0m  [1m[34mSELECT "availabilities"."off_day" FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:14:in `working_hours'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:17:in `map'
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 0.6ms | Allocations: 1914)
+
+
+Started GET "/doctors/2/working_hours" for ::1 at 2023-09-10 17:23:35 -0300
+Processing by DoctorsController#working_hours as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:13:in `working_hours'
+  [1m[36mAvailability Pluck (0.3ms)[0m  [1m[34mSELECT "availabilities"."off_day" FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 2]]
+  ↳ app/controllers/doctors_controller.rb:14:in `working_hours'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 2]]
+  ↳ app/controllers/doctors_controller.rb:17:in `map'
+Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 0.7ms | Allocations: 1811)
+
+
+Started GET "/doctors/2/availabilities" for ::1 at 2023-09-10 17:37:13 -0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+SyntaxError (/Users/gonzalopritzker/scheduling_system/app/controllers/availabilities_controller.rb:48: syntax error, unexpected end-of-input, expecting `end'):
+  
+app/controllers/availabilities_controller.rb:48: syntax error, unexpected end-of-input, expecting `end'
+app/controllers/availabilities_controller.rb:48: syntax error, unexpected end-of-input, expecting `end'
+Started GET "/doctors/2/availabilities" for ::1 at 2023-09-10 17:45:58 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"2"}
+Completed 404 Not Found in 38ms (ActiveRecord: 10.8ms | Allocations: 7370)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Doctor without an ID):
+  
+app/controllers/availabilities_controller.rb:49:in `index'
+Started GET "/doctors/2/availabilities" for ::1 at 2023-09-10 17:46:40 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"2"}
+  [1m[36mDoctor Load (0.4ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (1.6ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 2]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 2]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 61ms (Views: 0.2ms | ActiveRecord: 11.2ms | Allocations: 60275)
+
+
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:46:56 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.3ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.9ms | Allocations: 2867)
+
+
+  [1m[36mAppointment Load (0.6ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+Started GET "/doctors/1/working_hours" for ::1 at 2023-09-10 17:48:39 -0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by DoctorsController#working_hours as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:13:in `working_hours'
+  [1m[36mAvailability Pluck (0.3ms)[0m  [1m[34mSELECT "availabilities"."off_day" FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:14:in `working_hours'
+  [1m[36mAvailability Load (0.1ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:17:in `map'
+Completed 200 OK in 45ms (Views: 0.2ms | ActiveRecord: 6.5ms | Allocations: 44300)
+
+
+Started GET "/doctors/1/working_hours" for ::1 at 2023-09-10 17:48:39 -0300
+Processing by DoctorsController#working_hours as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:13:in `working_hours'
+  [1m[36mAvailability Pluck (0.3ms)[0m  [1m[34mSELECT "availabilities"."off_day" FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:14:in `working_hours'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:17:in `map'
+Completed 200 OK in 4ms (Views: 0.2ms | ActiveRecord: 0.8ms | Allocations: 1919)
+
+
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:48:51 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.3ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 21ms (Views: 0.2ms | ActiveRecord: 3.4ms | Allocations: 19594)
+
+
+  [1m[36mAppointment Load (0.6ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+Started GET "/doctors/1/working_hours" for ::1 at 2023-09-10 17:49:56 -0300
+Processing by DoctorsController#working_hours as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:13:in `working_hours'
+  [1m[36mAvailability Pluck (0.2ms)[0m  [1m[34mSELECT "availabilities"."off_day" FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:14:in `working_hours'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/doctors_controller.rb:17:in `map'
+Completed 200 OK in 4ms (Views: 0.2ms | ActiveRecord: 0.5ms | Allocations: 1938)
+
+
+Started GET "/doctors/1/availabilities" for ::1 at 2023-09-10 17:50:35 -0300
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:49:in `index'
+  [1m[36mAvailability Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/availabilities_controller.rb:53:in `index'
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:60:in `index'
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  ↳ app/controllers/availabilities_controller.rb:68:in `index'
+Completed 200 OK in 19ms (Views: 0.2ms | ActiveRecord: 1.0ms | Allocations: 2867)
+
+
