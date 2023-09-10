@@ -5,13 +5,12 @@ require 'rails_helper'
 RSpec.describe AppointmentsController, type: :controller do
   let(:doctor) { create(:doctor) }
   let(:appointment) { create(:appointment, doctor: doctor) } 
+  let!(:availability) { create(:availability, doctor: doctor) }
 
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'creates a new appointment' do
-        expect {
-          post :create, params: { doctor_id: doctor.id, appointment: attributes_for(:appointment) }
-        }.to change(Appointment, :count).by(1)
+        expect { post :create, params: { doctor_id: doctor.id, appointment: attributes_for(:appointment) }}.to change(Appointment, :count).by(1)
       end
 
       # validate when doctor is not available
@@ -26,9 +25,9 @@ RSpec.describe AppointmentsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid attributes' do
       it 'updates the appointment' do
-        put :update, params: { doctor_id: doctor.id, id: appointment.id, appointment: { date: "2024-01-01", start_time: "16:00", end_time: "17:00" } }
+        put :update, params: { doctor_id: doctor.id, id: appointment.id, appointment: { date: "2023-09-08", start_time: "16:00", end_time: "17:00" } }
         appointment.reload
-        expect(appointment.date.strftime('%Y-%m-%d')).to eq("2024-01-01")
+        expect(appointment.date.strftime('%Y-%m-%d')).to eq("2023-09-08")
       end
 
     end
