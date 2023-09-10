@@ -1,10 +1,13 @@
 class Availability < ApplicationRecord
   belongs_to :doctor
-  validates :start_time, presence: true, format: { with: /\A([01]?[0-9]|2[0-3]):[0-5][0-9]\z/, message: "should be a valid time format (HH:MM)" }
-  validates :end_time, presence: true, format: { with: /\A([01]?[0-9]|2[0-3]):[0-5][0-9]\z/, message: "should be a valid time format (HH:MM)" }
-  validates :date, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true
 
   validate  :start_time_before_end_time
+
+  WEEKDAYS = %w[MONDAY TUESDAY  WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY]
+
+  validates :weekday, inclusion: { in: WEEKDAYS }
 
   def start_time_before_end_time
     errors.add(:start_time, "must be before end time") unless

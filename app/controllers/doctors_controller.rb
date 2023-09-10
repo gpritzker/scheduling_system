@@ -22,7 +22,7 @@ class DoctorsController < ApplicationController
         end
 
         # JSON
-        render json: { days_off: days_off, working_hours: working_hours }
+        render json: {working_hours: working_hours }
 
     end
 

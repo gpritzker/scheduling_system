@@ -1609,3 +1609,630 @@ Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.7ms | Allocations: 487)
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
   [1m[36mAppointment Exists? (8.9ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '11:00' AND end_time > '11:00') OR (start_time < '13:00' AND end_time >= '13:00') OR (start_time >= '11:00' AND end_time <= '13:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["LIMIT", 1]]
   [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (30.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "clinic_app_test"[0m
+  [1m[35m (65.6ms)[0m  [1m[35mCREATE DATABASE "clinic_app_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "appointments" CASCADE[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE "appointments" ("id" bigserial primary key, "doctor_id" bigint NOT NULL, "date" date, "start_time" time, "end_time" time, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE INDEX "index_appointments_on_doctor_id" ON "appointments" ("doctor_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "availabilities" CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "availabilities" ("id" bigserial primary key, "doctor_id" bigint NOT NULL, "off_day" character varying, "start_time" time, "end_time" time, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "index_availabilities_on_doctor_id" ON "availabilities" ("doctor_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "doctors" CASCADE[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "doctors" ("id" bigserial primary key, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "appointments" ADD CONSTRAINT "fk_rails_8db8e1e8a5"
+FOREIGN KEY ("doctor_id")
+  REFERENCES "doctors" ("id")
+[0m
+  [1m[35m (0.9ms)[0m  [1m[35mALTER TABLE "availabilities" ADD CONSTRAINT "fk_rails_b9830dab2f"
+FOREIGN KEY ("doctor_id")
+  REFERENCES "doctors" ("id")
+[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20230910154515)[0m
+  [1m[35m (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20230907163515),
+(20230907163516),
+(20230907163518),
+(20230908204020);
+
+[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "test"], ["created_at", "2023-09-10 16:09:43.173706"], ["updated_at", "2023-09-10 16:09:43.173706"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "6c8ee1fbc2aa92dfea641084d03c4b390275f696"], ["created_at", "2023-09-10 16:09:43.177822"], ["updated_at", "2023-09-10 16:09:43.177822"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAppointment Count (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.8ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:09:43.297638"], ["updated_at", "2023-09-10 16:09:43.297638"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 422 Unprocessable Entity in 23ms (ActiveRecord: 2.3ms | Allocations: 20470)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:09:43.410027"], ["updated_at", "2023-09-10 16:09:43.410027"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:09:43.413924"], ["updated_at", "2023-09-10 16:09:43.413924"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:09:43.418545"], ["updated_at", "2023-09-10 16:09:43.418545"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:09:43.426647"], ["updated_at", "2023-09-10 16:09:43.426647"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:09:43.430707"], ["updated_at", "2023-09-10 16:09:43.430707"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:09:43.434987"], ["updated_at", "2023-09-10 16:09:43.434987"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAppointment Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:10:50.289485"], ["updated_at", "2023-09-10 16:10:50.289485"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Create (0.6ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 16:10:50.346925"], ["updated_at", "2023-09-10 16:10:50.346925"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 15ms (Views: 0.2ms | ActiveRecord: 2.5ms | Allocations: 18495)
+  [1m[36mAppointment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:10:50.368863"], ["updated_at", "2023-09-10 16:10:50.368863"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 16:10:50.370273"], ["updated_at", "2023-09-10 16:10:50.370273"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 449)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:10:50.375702"], ["updated_at", "2023-09-10 16:10:50.375702"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 16:10:50.377190"], ["updated_at", "2023-09-10 16:10:50.377190"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#update as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"17:00", "start_time"=>"16:00"}, "doctor_id"=>"1", "id"=>"3"}
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '16:00' AND end_time > '16:00') OR (start_time < '17:00' AND end_time >= '17:00') OR (start_time >= '16:00' AND end_time <= '17:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Update (0.3ms)[0m  [1m[33mUPDATE "appointments" SET "start_time" = $1, "end_time" = $2, "updated_at" = $3 WHERE "appointments"."id" = $4[0m  [["start_time", "16:00:00"], ["end_time", "17:00:00"], ["updated_at", "2023-09-10 16:10:50.381960"], ["id", 3]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 0.9ms | Allocations: 1633)
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:10:50.387316"], ["updated_at", "2023-09-10 16:10:50.387316"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 16:10:50.388879"], ["updated_at", "2023-09-10 16:10:50.388879"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"doctor_id"=>"1", "id"=>"4"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Destroy (0.1ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = $1[0m  [["id", 4]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.5ms | Allocations: 487)
+  [1m[36mAppointment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:10:50.398062"], ["updated_at", "2023-09-10 16:10:50.398062"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-10 16:10:50.399594"], ["updated_at", "2023-09-10 16:10:50.399594"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '11:00' AND end_time > '11:00') OR (start_time < '12:00' AND end_time >= '12:00') OR (start_time >= '11:00' AND end_time <= '12:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:10:50.403224"], ["updated_at", "2023-09-10 16:10:50.403224"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-10 16:10:50.404956"], ["updated_at", "2023-09-10 16:10:50.404956"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '10:30' AND end_time > '10:30') OR (start_time < '11:30' AND end_time >= '11:30') OR (start_time >= '10:30' AND end_time <= '11:30')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:10:50.407978"], ["updated_at", "2023-09-10 16:10:50.407978"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "12:00:00"], ["created_at", "2023-09-10 16:10:50.409489"], ["updated_at", "2023-09-10 16:10:50.409489"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '11:00' AND end_time > '11:00') OR (start_time < '13:00' AND end_time >= '13:00') OR (start_time >= '11:00' AND end_time <= '13:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAppointment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.4ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:16:49.851922"], ["updated_at", "2023-09-10 16:16:49.851922"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Create (0.5ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 16:16:49.910009"], ["updated_at", "2023-09-10 16:16:49.910009"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 16ms (Views: 0.2ms | ActiveRecord: 2.6ms | Allocations: 18495)
+  [1m[36mAppointment Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:16:49.932571"], ["updated_at", "2023-09-10 16:16:49.932571"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 16:16:49.934205"], ["updated_at", "2023-09-10 16:16:49.934205"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 449)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:16:49.939702"], ["updated_at", "2023-09-10 16:16:49.939702"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 16:16:49.941359"], ["updated_at", "2023-09-10 16:16:49.941359"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#update as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"17:00", "start_time"=>"16:00"}, "doctor_id"=>"1", "id"=>"10"}
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '16:00' AND end_time > '16:00') OR (start_time < '17:00' AND end_time >= '17:00') OR (start_time >= '16:00' AND end_time <= '17:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Update (0.3ms)[0m  [1m[33mUPDATE "appointments" SET "start_time" = $1, "end_time" = $2, "updated_at" = $3 WHERE "appointments"."id" = $4[0m  [["start_time", "16:00:00"], ["end_time", "17:00:00"], ["updated_at", "2023-09-10 16:16:49.946239"], ["id", 10]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 1.0ms | Allocations: 1633)
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:16:49.951077"], ["updated_at", "2023-09-10 16:16:49.951077"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 16:16:49.953020"], ["updated_at", "2023-09-10 16:16:49.953020"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"doctor_id"=>"1", "id"=>"11"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Destroy (0.2ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = $1[0m  [["id", 11]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.7ms | Allocations: 487)
+  [1m[36mAppointment Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:16:49.959574"], ["updated_at", "2023-09-10 16:16:49.959574"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"date"=>"2023-09-05", "id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Pluck (0.2ms)[0m  [1m[34mSELECT "appointments"."start_time", "appointments"."end_time" FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2[0m  [["doctor_id", 1], ["date", "2023-09-05"]]
+  [1m[36mAvailability Load (0.4ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+Completed 200 OK in 2393ms (Views: 0.1ms | ActiveRecord: 1.7ms | Allocations: 219326)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:16:52.369141"], ["updated_at", "2023-09-10 16:16:52.369141"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAvailability Create (0.6ms)[0m  [1m[32mINSERT INTO "availabilities" ("doctor_id", "off_day", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["off_day", "Tuesday"], ["start_time", "09:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-10 16:16:52.378696"], ["updated_at", "2023-09-10 16:16:52.378696"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"date"=>"2023-09-05", "id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Pluck (0.2ms)[0m  [1m[34mSELECT "appointments"."start_time", "appointments"."end_time" FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2[0m  [["doctor_id", 1], ["date", "2023-09-05"]]
+  [1m[36mAvailability Load (0.3ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+Completed 200 OK in 1625ms (Views: 0.2ms | ActiveRecord: 0.7ms | Allocations: 327353)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:16:54.014051"], ["updated_at", "2023-09-10 16:16:54.014051"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.4ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-10 16:16:54.015890"], ["updated_at", "2023-09-10 16:16:54.015890"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '11:00' AND end_time > '11:00') OR (start_time < '12:00' AND end_time >= '12:00') OR (start_time >= '11:00' AND end_time <= '12:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:16:54.019923"], ["updated_at", "2023-09-10 16:16:54.019923"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-10 16:16:54.021892"], ["updated_at", "2023-09-10 16:16:54.021892"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '10:30' AND end_time > '10:30') OR (start_time < '11:30' AND end_time >= '11:30') OR (start_time >= '10:30' AND end_time <= '11:30')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.1ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:16:54.024944"], ["updated_at", "2023-09-10 16:16:54.024944"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "12:00:00"], ["created_at", "2023-09-10 16:16:54.026371"], ["updated_at", "2023-09-10 16:16:54.026371"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '11:00' AND end_time > '11:00') OR (start_time < '13:00' AND end_time >= '13:00') OR (start_time >= '11:00' AND end_time <= '13:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.4ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:19:11.955162"], ["updated_at", "2023-09-10 16:19:11.955162"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"date"=>"2023-09-05", "id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Pluck (0.3ms)[0m  [1m[34mSELECT "appointments"."start_time", "appointments"."end_time" FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2[0m  [["doctor_id", 1], ["date", "2023-09-05"]]
+  [1m[36mAvailability Load (0.5ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+Completed 200 OK in 27037ms (Views: 0.2ms | ActiveRecord: 3.1ms | Allocations: 222905)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.4ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:20:04.155198"], ["updated_at", "2023-09-10 16:20:04.155198"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"date"=>"2023-09-05", "id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Pluck (0.3ms)[0m  [1m[34mSELECT "appointments"."start_time", "appointments"."end_time" FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2[0m  [["doctor_id", 1], ["date", "2023-09-05"]]
+  [1m[36mAvailability Load (0.3ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+Completed 200 OK in 72938ms (Views: 0.3ms | ActiveRecord: 2.4ms | Allocations: 227254)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.4ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:22:24.628704"], ["updated_at", "2023-09-10 16:22:24.628704"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"date"=>"2023-09-05", "id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Pluck (0.4ms)[0m  [1m[34mSELECT "appointments"."start_time", "appointments"."end_time" FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2[0m  [["doctor_id", 1], ["date", "2023-09-05"]]
+  [1m[36mAvailability Load (0.4ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+Completed 200 OK in 240275ms (Views: 0.2ms | ActiveRecord: 2.5ms | Allocations: 239096)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.4ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 16:26:30.760507"], ["updated_at", "2023-09-10 16:26:30.760507"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAvailability Create (0.7ms)[0m  [1m[32mINSERT INTO "availabilities" ("doctor_id", "off_day", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["off_day", "Tuesday"], ["start_time", "09:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-10 16:26:30.777734"], ["updated_at", "2023-09-10 16:26:30.777734"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"date"=>"2023-09-05", "id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Pluck (0.3ms)[0m  [1m[34mSELECT "appointments"."start_time", "appointments"."end_time" FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2[0m  [["doctor_id", 1], ["date", "2023-09-05"]]
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+Completed 200 OK in 1812ms (Views: 0.2ms | ActiveRecord: 1.4ms | Allocations: 218358)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (34.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "clinic_app_test"[0m
+  [1m[35m (67.6ms)[0m  [1m[35mCREATE DATABASE "clinic_app_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "appointments" CASCADE[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE TABLE "appointments" ("id" bigserial primary key, "doctor_id" bigint NOT NULL, "date" date, "start_time" time, "end_time" time, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "index_appointments_on_doctor_id" ON "appointments" ("doctor_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "availabilities" CASCADE[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "availabilities" ("id" bigserial primary key, "doctor_id" bigint NOT NULL, "off_day" character varying, "start_time" time, "end_time" time, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "weekday" character varying)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE INDEX "index_availabilities_on_doctor_id" ON "availabilities" ("doctor_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "doctors" CASCADE[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "doctors" ("id" bigserial primary key, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "specialty" character varying)[0m
+  [1m[35m (2.5ms)[0m  [1m[35mALTER TABLE "appointments" ADD CONSTRAINT "fk_rails_8db8e1e8a5"
+FOREIGN KEY ("doctor_id")
+  REFERENCES "doctors" ("id")
+[0m
+  [1m[35m (1.2ms)[0m  [1m[35mALTER TABLE "availabilities" ADD CONSTRAINT "fk_rails_b9830dab2f"
+FOREIGN KEY ("doctor_id")
+  REFERENCES "doctors" ("id")
+[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20230910182438)[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20230907163515),
+(20230907163516),
+(20230907163518),
+(20230908204020),
+(20230910154515),
+(20230910182136);
+
+[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "test"], ["created_at", "2023-09-10 19:37:31.998439"], ["updated_at", "2023-09-10 19:37:31.998439"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "5f444538a6a199cef14db47e470522ed8ad6077c"], ["created_at", "2023-09-10 19:37:32.001532"], ["updated_at", "2023-09-10 19:37:32.001532"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAppointment Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (1.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:37:32.116628"], ["updated_at", "2023-09-10 19:37:32.116628"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Create (0.6ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 19:37:32.184532"], ["updated_at", "2023-09-10 19:37:32.184532"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 22ms (Views: 0.2ms | ActiveRecord: 5.6ms | Allocations: 18995)
+  [1m[36mAppointment Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:37:32.218462"], ["updated_at", "2023-09-10 19:37:32.218462"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.4ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 19:37:32.220581"], ["updated_at", "2023-09-10 19:37:32.220581"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.2ms | ActiveRecord: 0.5ms | Allocations: 451)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:37:32.226714"], ["updated_at", "2023-09-10 19:37:32.226714"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.6ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 19:37:32.228568"], ["updated_at", "2023-09-10 19:37:32.228568"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#update as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"17:00", "start_time"=>"16:00"}, "doctor_id"=>"1", "id"=>"3"}
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 ORDER BY "appointments"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '16:00' AND end_time > '16:00') OR (start_time < '17:00' AND end_time >= '17:00') OR (start_time >= '16:00' AND end_time <= '17:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Update (0.2ms)[0m  [1m[33mUPDATE "appointments" SET "start_time" = $1, "end_time" = $2, "updated_at" = $3 WHERE "appointments"."id" = $4[0m  [["start_time", "16:00:00"], ["end_time", "17:00:00"], ["updated_at", "2023-09-10 19:37:32.234957"], ["id", 3]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 1.2ms | Allocations: 1834)
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:37:32.240221"], ["updated_at", "2023-09-10 19:37:32.240221"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.4ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 19:37:32.241788"], ["updated_at", "2023-09-10 19:37:32.241788"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"doctor_id"=>"1", "id"=>"4"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 ORDER BY "appointments"."id" ASC LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Destroy (0.2ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = $1[0m  [["id", 4]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.7ms | Allocations: 588)
+  [1m[36mAppointment Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:37:32.248928"], ["updated_at", "2023-09-10 19:37:32.248928"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.5ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:37:32.271708"], ["updated_at", "2023-09-10 19:37:32.271708"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.5ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-10 19:37:32.274094"], ["updated_at", "2023-09-10 19:37:32.274094"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '11:00' AND end_time > '11:00') OR (start_time < '12:00' AND end_time >= '12:00') OR (start_time >= '11:00' AND end_time <= '12:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:37:32.277613"], ["updated_at", "2023-09-10 19:37:32.277613"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-10 19:37:32.279511"], ["updated_at", "2023-09-10 19:37:32.279511"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '10:30' AND end_time > '10:30') OR (start_time < '11:30' AND end_time >= '11:30') OR (start_time >= '10:30' AND end_time <= '11:30')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:37:32.282756"], ["updated_at", "2023-09-10 19:37:32.282756"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "12:00:00"], ["created_at", "2023-09-10 19:37:32.284401"], ["updated_at", "2023-09-10 19:37:32.284401"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '11:00' AND end_time > '11:00') OR (start_time < '13:00' AND end_time >= '13:00') OR (start_time >= '11:00' AND end_time <= '13:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.5ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:40:09.024885"], ["updated_at", "2023-09-10 19:40:09.024885"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAvailability Create (0.9ms)[0m  [1m[32mINSERT INTO "availabilities" ("doctor_id", "off_day", "start_time", "end_time", "created_at", "updated_at", "weekday") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["doctor_id", 1], ["off_day", "Sunday"], ["start_time", "09:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-10 19:40:09.044100"], ["updated_at", "2023-09-10 19:40:09.044100"], ["weekday", "MONDAY"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"weekday"=>"MONDAY", "id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  [1m[36mAvailability Load (0.3ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+Completed 200 OK in 4550ms (Views: 0.2ms | ActiveRecord: 1.6ms | Allocations: 545558)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAppointment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:41:54.666603"], ["updated_at", "2023-09-10 19:41:54.666603"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Create (0.4ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 19:41:54.720402"], ["updated_at", "2023-09-10 19:41:54.720402"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 13ms (Views: 0.1ms | ActiveRecord: 2.1ms | Allocations: 18499)
+  [1m[36mAppointment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:41:54.741147"], ["updated_at", "2023-09-10 19:41:54.741147"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 19:41:54.742614"], ["updated_at", "2023-09-10 19:41:54.742614"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 451)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:41:54.748004"], ["updated_at", "2023-09-10 19:41:54.748004"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 19:41:54.749454"], ["updated_at", "2023-09-10 19:41:54.749454"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#update as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"17:00", "start_time"=>"16:00"}, "doctor_id"=>"1", "id"=>"10"}
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 ORDER BY "appointments"."id" ASC LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '16:00' AND end_time > '16:00') OR (start_time < '17:00' AND end_time >= '17:00') OR (start_time >= '16:00' AND end_time <= '17:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Update (0.3ms)[0m  [1m[33mUPDATE "appointments" SET "start_time" = $1, "end_time" = $2, "updated_at" = $3 WHERE "appointments"."id" = $4[0m  [["start_time", "16:00:00"], ["end_time", "17:00:00"], ["updated_at", "2023-09-10 19:41:54.755365"], ["id", 10]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 1.0ms | Allocations: 1834)
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:41:54.759510"], ["updated_at", "2023-09-10 19:41:54.759510"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2024-01-01"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-10 19:41:54.761084"], ["updated_at", "2023-09-10 19:41:54.761084"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"doctor_id"=>"1", "id"=>"11"}
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 ORDER BY "appointments"."id" ASC LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Destroy (0.2ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = $1[0m  [["id", 11]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.6ms | Allocations: 588)
+  [1m[36mAppointment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:41:54.767248"], ["updated_at", "2023-09-10 19:41:54.767248"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAvailability Create (0.5ms)[0m  [1m[32mINSERT INTO "availabilities" ("doctor_id", "off_day", "start_time", "end_time", "created_at", "updated_at", "weekday") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["doctor_id", 1], ["off_day", "Sunday"], ["start_time", "09:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-10 19:41:54.780165"], ["updated_at", "2023-09-10 19:41:54.780165"], ["weekday", "MONDAY"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"weekday"=>"MONDAY", "id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  [1m[36mAvailability Load (0.3ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+Completed 200 OK in 2230ms (Views: 0.2ms | ActiveRecord: 0.6ms | Allocations: 386480)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:41:57.019730"], ["updated_at", "2023-09-10 19:41:57.019730"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-10 19:41:57.021638"], ["updated_at", "2023-09-10 19:41:57.021638"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '11:00' AND end_time > '11:00') OR (start_time < '12:00' AND end_time >= '12:00') OR (start_time >= '11:00' AND end_time <= '12:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:41:57.025402"], ["updated_at", "2023-09-10 19:41:57.025402"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-10 19:41:57.027140"], ["updated_at", "2023-09-10 19:41:57.027140"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '10:30' AND end_time > '10:30') OR (start_time < '11:30' AND end_time >= '11:30') OR (start_time >= '10:30' AND end_time <= '11:30')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-10 19:41:57.030275"], ["updated_at", "2023-09-10 19:41:57.030275"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["start_time", "10:00:00"], ["end_time", "12:00:00"], ["created_at", "2023-09-10 19:41:57.031816"], ["updated_at", "2023-09-10 19:41:57.031816"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '11:00' AND end_time > '11:00') OR (start_time < '13:00' AND end_time >= '13:00') OR (start_time >= '11:00' AND end_time <= '13:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-10"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m

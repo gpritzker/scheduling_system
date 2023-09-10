@@ -62,7 +62,7 @@ Setup
 5. rails db:create db:migrate
 6. rails db:create db:seed
 * for DB use postgresql and de file .env to make de 
-  # CLINIC_APP_DATABASE_PASSWORD
+  # CLINIC_APP_DATABASE_PASSWORD='your_db_password'
 ## Start the Rails server:
 7. rails server
 * By default, the server will run on http://localhost:3000.
@@ -83,22 +83,44 @@ Doctors
     #EXAMPLE GET http://localhost:3000/doctors/1/working_hours
 Availability
 # Endpoint to check a doctors availability
-    #GET GET curl -X GET "http://localhost:3000/doctors/5/available_slots?date=2023-09-05 is an Example to check a doctors availability with a date for params
+    #GET GET curl -X GET "http://localhost:3000/doctors/1/available_slots? is an Example to check a doctors availability
+    
 Appointments
-# Endpoint to update an appointment
-    # curl -X PUT http://localhost:3000/doctors/:doctor_id/appointments/:id \
-    #  -H "Content-Type: application/json" \
-    #  -d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
-    # Example to update an appointment
-    #  curl -X PUT http://localhost:3000/doctors/1/appointments/1 \  
-    #  -H "Content-Type: application/json" \
-    #  -d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
 # Endpoint to book (appointment) a doctors open slot
-    # POST http://localhost:3000/doctors/:id/appointments
-    #Example:  curl -X POST \
-    #  -H "Content-Type: application/json" \
-    #  -d '{ "appointment": { "date": "2023-09-01", "start_time": "12:00", "end_time": "13:00" } }' \
-    #  http://localhost:3000/doctors/2/appointments
+   # Endpoint to book an appointment for a doctor's available slot.
+# Method: POST
+# URL: http://localhost:3000/doctors/:id/appointments
+#
+# Parameters:
+# - date: The date of the appointment (format: "YYYY-MM-DD").
+# - start_time: The starting time of the appointment (format: "HH:MM").
+# - end_time: The ending time of the appointment (format: "HH:MM").
+#
+# Example using curl:
+$ curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{ "appointment": { "date": "2023-09-01", "start_time": "12:00", "end_time": "13:00" } }' \
+  http://localhost:3000/doctors/2/appointments
+
+# Endpoint to update an existing appointment for a doctor.
+# Method: PUT
+# URL: http://localhost:3000/doctors/:doctor_id/appointments/:id
+#
+# Parameters:
+# - date: The updated date for the appointment (format: "YYYY-MM-DD").
+# - start_time: The updated starting time of the appointment (format: "HH:MM").
+# - end_time: The updated ending time of the appointment (format: "HH:MM").
+#
+# Usage using curl:
+$ curl -X PUT http://localhost:3000/doctors/:doctor_id/appointments/:id \
+  -H "Content-Type: application/json" \
+  -d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
+  
+# Example to update an appointment with specific IDs:
+$ curl -X PUT http://localhost:3000/doctors/1/appointments/1 \
+  -H "Content-Type: application/json" \
+  -d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
+
 # Endpoint to delete an appointment
     #curl -X DELETE http://localhost:3000/doctors/:doctor_id/appointments/:id
     #example curl -X DELETE http://localhost:3000/doctors/1/appointments/1

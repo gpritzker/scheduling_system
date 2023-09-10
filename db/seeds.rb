@@ -6,12 +6,13 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 # Create doc
-dr_john = Doctor.create(name: "Dr. John Doe")
-dr_jane = Doctor.create(name: "Dr. Jane Doe")
+dr_john = Doctor.create!(name: "Dr. John Doe", specialty: "Cardiologist")
+dr_jane = Doctor.create!(name: "Dr. Jane Doe", specialty: "Dentist")
 
 # Availability for Dr. John
-Availability.create(doctor: dr_john,  date: "2023-09-19", off_day: "Sunday", start_time: "09:00", end_time: "17:00")
-Availability.create(doctor: dr_john,  date: "2023-09-18", off_day: "Sunday", start_time: "09:00", end_time: "15:00")
-
-# Availability for Dr. Jane
-Availability.create(doctor: dr_jane,  date: "2023-09-15", off_day: "Sunday", start_time: "10:00", end_time: "18:00")
+["WEDNESDAY", "FRIDAY", "MONDAY"].each do |day|
+    Availability.create!(doctor: dr_john, weekday: day, start_time: "09:00", end_time: "17:00")
+  end
+["MONDAY", "TUESDAY"].each do |day|
+    Availability.create!(doctor: dr_jane, weekday: day, start_time: "10:00", end_time: "18:00")
+  end

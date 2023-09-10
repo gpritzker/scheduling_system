@@ -18,5 +18,12 @@ class Doctor < ApplicationRecord
         #if overlapping appoitmens the doctor is not available
         overlapping_appointments.empty?
     end
+
+    def is_off_day?(date, off_day)
+        # convert day tu string name (for example, "Monday", "Tuesday", etc.)
+        day_name = date.strftime('%A')
+        # is the same?
+        day_name == day_off
+    end
       
 end

@@ -37,7 +37,7 @@ class AppointmentsController < ApplicationController
     #  -d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
 
     def update
-      appointment = Appointment.find(params[:id])
+      appointment = Appointment.where(id: params[:id]).first
       #validate if an appointment exists
         unless appointment
             render json: { error: 'Appointment not found.' }, status: :not_found
@@ -62,7 +62,7 @@ class AppointmentsController < ApplicationController
     #example curl -X DELETE http://localhost:3000/doctors/1/appointments/1
 
     def destroy
-      appointment = Appointment.find(params[:id])
+      appointment = Appointment.where(id: params[:id]).first
       doctor = Doctor.find(params[:doctor_id])
        #verify if the doctor exists
         unless doctor
