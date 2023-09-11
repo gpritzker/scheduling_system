@@ -3909,3 +3909,132 @@ Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 0.5ms | Allocations: 3086)
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
   [1m[36mAvailability Load (0.1ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "FRIDAY"], ["LIMIT", 1]]
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.8ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-11 12:34:52.596613"], ["updated_at", "2023-09-11 12:34:52.596613"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAvailability Create (0.6ms)[0m  [1m[32mINSERT INTO "availabilities" ("doctor_id", "off_day", "start_time", "end_time", "created_at", "updated_at", "weekday") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["doctor_id", 1], ["off_day", "Sunday"], ["start_time", "09:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-11 12:34:52.616098"], ["updated_at", "2023-09-11 12:34:52.616098"], ["weekday", "FRIDAY"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAppointment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2023-09-8", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE Doctor Load (0.0ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "FRIDAY"], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '09:00' AND end_time > '09:00') OR (start_time < '10:00' AND end_time >= '10:00') OR (start_time >= '09:00' AND end_time <= '10:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Create (0.4ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-11 12:34:52.682799"], ["updated_at", "2023-09-11 12:34:52.682799"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 14ms (Views: 0.2ms | ActiveRecord: 2.3ms | Allocations: 16477)
+  [1m[36mAppointment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-11 12:34:52.710209"], ["updated_at", "2023-09-11 12:34:52.710209"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAvailability Create (0.2ms)[0m  [1m[32mINSERT INTO "availabilities" ("doctor_id", "off_day", "start_time", "end_time", "created_at", "updated_at", "weekday") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["doctor_id", 1], ["off_day", "Sunday"], ["start_time", "09:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-11 12:34:52.711545"], ["updated_at", "2023-09-11 12:34:52.711545"], ["weekday", "FRIDAY"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.1ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-11 12:34:52.712865"], ["updated_at", "2023-09-11 12:34:52.712865"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#create as HTML
+  Parameters: {"appointment"=>{"date"=>"2024-01-01", "end_time"=>"10:00", "start_time"=>"09:00"}, "doctor_id"=>"1"}
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE Doctor Load (0.0ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAvailability Load (0.2ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "MONDAY"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.2ms | ActiveRecord: 0.4ms | Allocations: 451)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-11 12:34:52.717853"], ["updated_at", "2023-09-11 12:34:52.717853"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAvailability Create (0.2ms)[0m  [1m[32mINSERT INTO "availabilities" ("doctor_id", "off_day", "start_time", "end_time", "created_at", "updated_at", "weekday") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["doctor_id", 1], ["off_day", "Sunday"], ["start_time", "09:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-11 12:34:52.719267"], ["updated_at", "2023-09-11 12:34:52.719267"], ["weekday", "FRIDAY"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-11 12:34:52.720746"], ["updated_at", "2023-09-11 12:34:52.720746"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#update as HTML
+  Parameters: {"appointment"=>{"date"=>"2023-09-08", "end_time"=>"17:00", "start_time"=>"16:00"}, "doctor_id"=>"1", "id"=>"92"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 ORDER BY "appointments"."id" ASC LIMIT $2[0m  [["id", 92], ["LIMIT", 1]]
+  [1m[36mCACHE Doctor Load (0.0ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAvailability Load (0.1ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "FRIDAY"], ["LIMIT", 1]]
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = $1 AND "appointments"."date" = $2 AND ((start_time <= '16:00' AND end_time > '16:00') OR (start_time < '17:00' AND end_time >= '17:00') OR (start_time >= '16:00' AND end_time <= '17:00')) LIMIT $3[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Update (0.2ms)[0m  [1m[33mUPDATE "appointments" SET "start_time" = $1, "end_time" = $2, "updated_at" = $3 WHERE "appointments"."id" = $4[0m  [["start_time", "16:00:00"], ["end_time", "17:00:00"], ["updated_at", "2023-09-11 12:34:52.726489"], ["id", 92]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 1.1ms | Allocations: 2038)
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 LIMIT $2[0m  [["id", 92], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-11 12:34:52.730907"], ["updated_at", "2023-09-11 12:34:52.730907"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAvailability Create (0.3ms)[0m  [1m[32mINSERT INTO "availabilities" ("doctor_id", "off_day", "start_time", "end_time", "created_at", "updated_at", "weekday") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["doctor_id", 1], ["off_day", "Sunday"], ["start_time", "09:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-11 12:34:52.732734"], ["updated_at", "2023-09-11 12:34:52.732734"], ["weekday", "FRIDAY"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["start_time", "09:00:00"], ["end_time", "10:00:00"], ["created_at", "2023-09-11 12:34:52.734475"], ["updated_at", "2023-09-11 12:34:52.734475"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"doctor_id"=>"1", "id"=>"93"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = $1 ORDER BY "appointments"."id" ASC LIMIT $2[0m  [["id", 93], ["LIMIT", 1]]
+  [1m[36mCACHE Doctor Load (0.0ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Destroy (0.1ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = $1[0m  [["id", 93]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.5ms | Allocations: 667)
+  [1m[36mAppointment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "appointments"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-11 12:34:52.740465"], ["updated_at", "2023-09-11 12:34:52.740465"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAvailability Create (0.2ms)[0m  [1m[32mINSERT INTO "availabilities" ("doctor_id", "off_day", "start_time", "end_time", "created_at", "updated_at", "weekday") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["doctor_id", 1], ["off_day", "Sunday"], ["start_time", "09:00:00"], ["end_time", "17:00:00"], ["created_at", "2023-09-11 12:34:52.741963"], ["updated_at", "2023-09-11 12:34:52.741963"], ["weekday", "MONDAY"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by AvailabilitiesController#index as HTML
+  Parameters: {"weekday"=>"MONDAY", "id"=>"1"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAvailability Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 LIMIT $2[0m  [["doctor_id", 1], ["LIMIT", 1]]
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."doctor_id" = $1[0m  [["doctor_id", 1]]
+  [1m[36mAvailability Load (0.1ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1[0m  [["doctor_id", 1]]
+Completed 200 OK in 8ms (Views: 0.2ms | ActiveRecord: 0.8ms | Allocations: 3086)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-11 12:34:52.759635"], ["updated_at", "2023-09-11 12:34:52.759635"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-06"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-11 12:34:52.761316"], ["updated_at", "2023-09-11 12:34:52.761316"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAvailability Load (0.1ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "FRIDAY"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-11 12:34:52.764288"], ["updated_at", "2023-09-11 12:34:52.764288"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-06"], ["start_time", "10:00:00"], ["end_time", "11:00:00"], ["created_at", "2023-09-11 12:34:52.766445"], ["updated_at", "2023-09-11 12:34:52.766445"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAvailability Load (0.1ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "WEDNESDAY"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDoctor Create (0.2ms)[0m  [1m[32mINSERT INTO "doctors" ("id", "name", "created_at", "updated_at", "specialty") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["id", 1], ["name", "Dr. John Doe"], ["created_at", "2023-09-11 12:34:52.769446"], ["updated_at", "2023-09-11 12:34:52.769446"], ["specialty", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAppointment Create (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("doctor_id", "date", "start_time", "end_time", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["doctor_id", 1], ["date", "2023-09-08"], ["start_time", "10:00:00"], ["end_time", "12:00:00"], ["created_at", "2023-09-11 12:34:52.770947"], ["updated_at", "2023-09-11 12:34:52.770947"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mAvailability Load (0.1ms)[0m  [1m[34mSELECT "availabilities".* FROM "availabilities" WHERE "availabilities"."doctor_id" = $1 AND "availabilities"."weekday" = $2 LIMIT $3[0m  [["doctor_id", 1], ["weekday", "FRIDAY"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m

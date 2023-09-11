@@ -5,9 +5,6 @@ class Doctor < ApplicationRecord
 
     def available_at?(doctor_id, date, start_time, end_time)
         appointments = Appointment.where(doctor_id: doctor_id)
-        #convert start_time and end_time to Time objects
-        # requested_start_time = Time.parse(start_time)
-        # requested_end_time = Time.parse(end_time)
         date_object = Date.parse(date)
         weekday = date_object.strftime('%A').upcase 
         requested_start_time = start_time

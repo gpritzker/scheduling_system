@@ -61,8 +61,8 @@ Setup
 4. rails db:create db:create
 5. rails db:create db:migrate
 6. rails db:create db:seed
-* for DB use postgresql and de file .env to make de 
-  # CLINIC_APP_DATABASE_PASSWORD='your_db_password'
+* for DB use postgresql and file .env to make 
+  ## - CLINIC_APP_DATABASE_PASSWORD='your_db_password'
 ## Start the Rails server:
 7. rails server
 * By default, the server will run on http://localhost:3000.

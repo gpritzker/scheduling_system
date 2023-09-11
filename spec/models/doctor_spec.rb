@@ -17,6 +17,7 @@ RSpec.describe Doctor, type: :model do
     context 'when there are no overlapping appointments' do
       before do
         # Create a non-overlapping appointment for the doctor
+        create(:appointment, doctor: doctor, date:  "2023-09-6", start_time: "10:00", end_time: "11:00")
       end
 
       it 'returns false for non-overlapping times' do
