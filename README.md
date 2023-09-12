@@ -104,13 +104,12 @@ We use RSpec for testing. To run tests:
  - end_time: The ending time of the appointment (format: "HH:MM").
 
 ## Example using curl:
-curl --location 'http://localhost:3000/doctors/1/appointments' \
---header 'Content-Type: application/json' \
---data '{ "appointment": 
-    { "date": "2023-09-08", 
-     "start_time": "12:00", 
-     "end_time": "13:00" } 
-}'
+ #curl --location 'http://localhost:3000/doctors/1/appointments' \
+ #--header 'Content-Type: application/json' \
+ #--data '{ "appointment": 
+     #{ "date": "2023-09-08", 
+      #"start_time": "12:00", 
+      #"end_time": "13:00" } }'
 
 ## Endpoint to update an existing appointment for a doctor.
 Method: PUT
@@ -120,14 +119,14 @@ Parameters:
 - start_time: The updated starting time of the appointment (format: "HH:MM").
 - end_time: The updated ending time of the appointment (format: "HH:MM").
 ## Usage using curl:
-  $ curl -X PUT http://localhost:3000/doctors/:doctor_id/appointments/:id \
-    -H "Content-Type: application/json" \
-    -d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
+   #curl -X PUT http://localhost:3000/doctors/:doctor_id/appointments/:id \
+     #H "Content-Type: application/json" \
+     #d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
   
 ## Example to update an appointment with specific IDs:
-  $ curl -X PUT http://localhost:3000/doctors/1/appointments/1 \
-    -H "Content-Type: application/json" \
-    -d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
+  #curl -X PUT http://localhost:3000/doctors/1/appointments/1 \
+    #-H "Content-Type: application/json" \
+    #-d '{"appointment": {"date": "2023-10-01", "start_time": "15:00", "end_time": "16:00"}}'
 
 ## Endpoint to delete an appointment
     #curl -X DELETE http://localhost:3000/doctors/:doctor_id/appointments/:id
