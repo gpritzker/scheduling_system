@@ -118,6 +118,7 @@ Parameters:
 - date: The updated date for the appointment (format: "YYYY-MM-DD").
 - start_time: The updated starting time of the appointment (format: "HH:MM").
 - end_time: The updated ending time of the appointment (format: "HH:MM").
+
 ## Usage using curl:
    #curl -X PUT http://localhost:3000/doctors/:doctor_id/appointments/:id \
      #H "Content-Type: application/json" \
